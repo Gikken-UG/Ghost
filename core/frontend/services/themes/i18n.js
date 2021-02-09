@@ -22,6 +22,7 @@ class ThemeI18n extends i18n.I18n {
     init(activeTheme) {
         // This function is called during theme initialization, and when switching language or theme.
         const currentLocale = this._loadLocale();
+        const allLocales = this._allLocales;
 
         // Reading file for current locale and active theme and keeping its content in memory
         if (activeTheme) {
@@ -29,6 +30,20 @@ class ThemeI18n extends i18n.I18n {
             // Compatibility with both old themes and i18n-capable themes.
             // Preventing missing files.
             this._strings = this._tryGetLocale(activeTheme, currentLocale);
+
+            // Mate: loading multiple locales at once
+            const realThis = this;
+
+            allLocales.forEach(function (locale) {
+                realThis._allStrings[locale] = realThis._tryGetLocale(activeTheme, locale);
+                if (isNil(realThis._allStrings[locale])) {
+                    realThis._allStrings[locale] = realThis._allStrings._tryGetLocale(activeTheme, realThis.defaultLocale());
+                }
+
+                if (isNil(realThis._allStrings[locale])) {
+                    realThis._allStrings[locale] = {};
+                }
+            });
 
             if (!this._strings && currentLocale !== this.defaultLocale()) {
                 logging.warn(`Falling back to locales/${this.defaultLocale()}.json.`);
@@ -73,7 +88,11 @@ class ThemeI18n extends i18n.I18n {
      * Load the current locale out of the settings cache
      */
     _loadLocale() {
-        this._locale = settingsCache.get('lang');
+        this._locale = settingsCache.get('lang').split(',')[0].trim();
+        // Mate: loading multiple locales at once
+        this._allLocales = settingsCache.get('lang').split(',').map((e) => {
+            return e.trim();
+        });
         return this._locale;
     }
 

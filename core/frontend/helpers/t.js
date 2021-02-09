@@ -15,11 +15,15 @@ const {themeI18n} = require('../services/proxy');
 module.exports = function t(text, options) {
     const bindings = {};
     let prop;
+    let locale = null;
     for (prop in options.hash) {
         if (Object.prototype.hasOwnProperty.call(options.hash, prop)) {
             bindings[prop] = options.hash[prop];
+            if (prop === 'customLocale') {
+                locale = options.hash[prop];
+            }
         }
     }
 
-    return themeI18n.t(text, bindings);
+    return themeI18n.t(text, bindings, locale);
 };

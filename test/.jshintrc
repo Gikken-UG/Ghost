@@ -19,6 +19,7 @@
       "undef": true,
       "unused": true,
       "indent": 4,
+      "esversion": 6,
       "quotmark": "single",
       "predef": [ "-Promise" ]
 }

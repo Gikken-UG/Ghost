@@ -14,7 +14,9 @@ const logging = require('../../../shared/logging');
 class I18n {
     constructor(locale) {
         this._locale = locale || this.defaultLocale();
+        this._allLocales = null;
         this._strings = null;
+        this._allStrings = null;
     }
 
     /**
@@ -41,13 +43,14 @@ class I18n {
      *
      * @param {string} translationPath Path within the JSON language file to desired string (ie: "errors.init.jsNotBuilt")
      * @param {object} [bindings]
+     * @param {string} locale Optional, specify if a string from a specific locale is needed
      * @returns {string}
      */
-    t(translationPath, bindings) {
+    t(translationPath, bindings, locale) {
         let string;
         let msg;
 
-        string = this._findString(translationPath);
+        string = this._findString(translationPath, {}, locale);
 
         // If the path returns an array (as in the case with anything that has multiple paragraphs such as emails), then
         // loop through them and return an array of translated/formatted strings. Otherwise, just return the normal
@@ -96,13 +99,18 @@ class I18n {
      *
      * @param {String} msgPath
      */
-    _getCandidateString(msgPath) {
+    _getCandidateString(msgPath, locale) {
         // Backend messages use dot-notation, and the '$.' prefix is added here
         // While bracket-notation allows any Unicode characters in keys for themes,
         // dot-notation allows only word characters in keys for backend messages
         // (that is \w or [A-Za-z0-9_] in RegExp)
-        let jsonPath = `$.${msgPath}`;
-        return jp.value(this._strings, jsonPath);
+        if (!isNil(locale)) {
+            let jsonPath = `$.${msgPath}`;
+            return jp.value(this._allStrings[locale], jsonPath);
+        } else {
+            let jsonPath = `$.${msgPath}`;
+            return jp.value(this._strings, jsonPath);
+        }
     }
 
     /**
@@ -111,7 +119,7 @@ class I18n {
      * @param {string} msgPath Path with in the JSON language file to desired string (ie: "errors.init.jsNotBuilt")
      * @returns {string}
      */
-    _findString(msgPath, opts) {
+    _findString(msgPath, opts, locale) {
         const options = merge({log: true}, opts || {});
         let candidateString;
         let matchingString;
@@ -127,7 +135,7 @@ class I18n {
             this.init();
         }
 
-        candidateString = this._getCandidateString(msgPath);
+        candidateString = this._getCandidateString(msgPath, locale);
 
         matchingString = candidateString || {};
 
