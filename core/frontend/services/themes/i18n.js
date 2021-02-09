@@ -37,7 +37,7 @@ class ThemeI18n extends i18n.I18n {
             allLocales.forEach(function (locale) {
                 realThis._allStrings[locale] = realThis._tryGetLocale(activeTheme, locale);
                 if (isNil(realThis._allStrings[locale])) {
-                    realThis._allStrings[locale] = realThis._allStrings._tryGetLocale(activeTheme, realThis.defaultLocale());
+                    realThis._allStrings[locale] = realThis._tryGetLocale(activeTheme, realThis.defaultLocale());
                 }
 
                 if (isNil(realThis._allStrings[locale])) {
@@ -101,15 +101,20 @@ class ThemeI18n extends i18n.I18n {
      *
      * @param {String} msgPath
      */
-    _getCandidateString(msgPath) {
+    _getCandidateString(msgPath, locale) {
         // Both jsonpath's dot-notation and bracket-notation start with '$'
         // E.g.: $.store.book.title or $['store']['book']['title']
         // The {{t}} translation helper passes the default English text
         // The full Unicode jsonpath with '$' is built here
         // jp.stringify and jp.value are jsonpath methods
         // Info: https://www.npmjs.com/package/jsonpath
-        let path = jp.stringify(['$', msgPath]);
-        return jp.value(this._strings, path) || msgPath;
+        if (!isNil(locale)) {
+            let path = jp.stringify(['$', msgPath]);
+            return jp.value(this._allStrings[locale], path) || msgPath;
+        } else {
+            let path = jp.stringify(['$', msgPath]);
+            return jp.value(this._strings, path) || msgPath;
+        }
     }
 }
 

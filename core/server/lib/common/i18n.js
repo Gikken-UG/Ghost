@@ -14,9 +14,9 @@ const logging = require('../../../shared/logging');
 class I18n {
     constructor(locale) {
         this._locale = locale || this.defaultLocale();
-        this._allLocales = null;
+        this._allLocales = {};
         this._strings = null;
-        this._allStrings = null;
+        this._allStrings = {};
     }
 
     /**
@@ -49,19 +49,17 @@ class I18n {
     t(translationPath, bindings, locale) {
         let string;
         let msg;
-
         string = this._findString(translationPath, {}, locale);
-
         // If the path returns an array (as in the case with anything that has multiple paragraphs such as emails), then
         // loop through them and return an array of translated/formatted strings. Otherwise, just return the normal
         // translated/formatted string.
         if (Array.isArray(string)) {
             msg = [];
             string.forEach(function (s) {
-                msg.push(this._formatMessage(s, bindings));
+                msg.push(this._formatMessage(s, bindings, locale));
             });
         } else {
-            msg = this._formatMessage(string, bindings);
+            msg = this._formatMessage(string, bindings, locale);
         }
 
         return msg;
@@ -134,7 +132,6 @@ class I18n {
         if (isNil(this._strings)) {
             this.init();
         }
-
         candidateString = this._getCandidateString(msgPath, locale);
 
         matchingString = candidateString || {};
@@ -168,8 +165,8 @@ class I18n {
      * @param {String} string
      * @param {Object} bindings
      */
-    _formatMessage(string, bindings) {
-        let currentLocale = this.locale();
+    _formatMessage(string, bindings, locale) {
+        let currentLocale = locale || this.locale();
         let msg = new MessageFormat(string, currentLocale);
 
         try {
