@@ -445,10 +445,10 @@
   dependencies:
     lodash-es "^4.17.11"
 
-"@tryghost/html-to-mobiledoc@0.7.9":
-  version "0.7.9"
-  resolved "https://registry.yarnpkg.com/@tryghost/html-to-mobiledoc/-/html-to-mobiledoc-0.7.9.tgz#a961a5b41716709fcdf4893f6e5b86a57e85ab92"
-  integrity sha512-jMHmFumHn7lan5+eTm5fMJjiYs4Nlw6vzzzgpH/gi2Q1YyPe9Fyc3nwI+uA4ZMccNSf5nP8QWuk6HZqV5zQKLw==
+"@tryghost/html-to-mobiledoc@0.7.10":
+  version "0.7.10"
+  resolved "https://registry.yarnpkg.com/@tryghost/html-to-mobiledoc/-/html-to-mobiledoc-0.7.10.tgz#607513111e59aae7df4bccae57646674a8ba6729"
+  integrity sha512-XMwlG7ay8N0ucBJLkw+Fpg5Zh/3lrRBVfXKGa5hpHBHRoavihrsezCUK4dobH0ByYOzhW+x4a+kzTvLwmRGt3g==
   dependencies:
     "@tryghost/kg-parser-plugins" "1.1.0"
     "@tryghost/mobiledoc-kit" "^0.12.4-ghost.1"
@@ -625,13 +625,13 @@
   dependencies:
     "@tryghost/errors" "^0.2.7"
 
-"@tryghost/social-urls@0.1.18":
-  version "0.1.18"
-  resolved "https://registry.yarnpkg.com/@tryghost/social-urls/-/social-urls-0.1.18.tgz#f4fcc85ed6fdef7ba80644aa6255684ab1db372e"
-  integrity sha512-s/pI61PHTc+bUm3+TrzpTiFTA23/tGzajbbpRfQ7zIp6bFbqfGyvzIgd8fzMjmOE2RyUFn3Ve6s5IDFf/LdkXQ==
+"@tryghost/social-urls@0.1.19":
+  version "0.1.19"
+  resolved "https://registry.yarnpkg.com/@tryghost/social-urls/-/social-urls-0.1.19.tgz#cb04bea7a58b7d88fd08cfd6b97d770414aabe49"
+  integrity sha512-Buqzse5n5oYI3sBly0mm3CemAOiFjp1vt/t26ES8bTJ8+ujlvNWyA3CJS9nI3VFc6rVE3zAazEAd0aoNiNBRpQ==
   dependencies:
     bluebird "3.7.2"
-    ghost-ignition "4.2.4"
+    ghost-ignition "4.4.3"
     lodash "4.17.20"
 
 "@tryghost/string@0.1.14":
@@ -648,10 +648,10 @@
   dependencies:
     unidecode "^0.1.8"
 
-"@tryghost/url-utils@0.6.25":
-  version "0.6.25"
-  resolved "https://registry.yarnpkg.com/@tryghost/url-utils/-/url-utils-0.6.25.tgz#1f03e99985eb490d69d875bc0490f5aa563712a2"
-  integrity sha512-gSI1PzgSU83WWwtbET9GU2Aak1KceSe3Kxm57ePz1QDdMLwOlS8KWW853Q/LiBDcr+h04EFopzgmhMCzxUKAEw==
+"@tryghost/url-utils@0.6.26":
+  version "0.6.26"
+  resolved "https://registry.yarnpkg.com/@tryghost/url-utils/-/url-utils-0.6.26.tgz#a73ed9276cc380c180e8032c4b56e10adb6cd381"
+  integrity sha512-+uSUcb0o5mxd8G6lC0r0Dd14cMeboZRgV/Kl3Vp3sJx7UB3Bxa2gVHIE1EIAEw0FkJP5RsPVYrKOBYFHlbgRUQ==
   dependencies:
     cheerio "0.22.0"
     moment "2.27.0"
